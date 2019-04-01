@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,10 +26,41 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                adivinha();
             }
         });
+    }
+
+    private void adivinha() {
+        EditText editTextNumero = findViewById(R.id.EditTextNumero);
+        String textoNumero = editTextNumero.getText().toString();
+
+        if(textoNumero.isEmpty()){
+            editTextNumero.setError("Introduza um numero entre 1 e 10!");
+            editTextNumero.requestFocus();
+            return;
+        }
+        int numero = Integer.parseInt(textoNumero);
+        try {
+            numero = Integer.parseInt(textoNumero);
+        } catch (NumberFormatException e) {
+            editTextNumero.setError("Número inválido! Introduza um numero entre 1 e 10!");
+            editTextNumero.requestFocus();
+            return;
+        }
+
+        if(numero < 1 || numero > 10){
+            editTextNumero.setError("Número inválido! Introduza um numero entre 1 e 10!");
+            editTextNumero.requestFocus();
+            return;
+        }
+
+        verificaAcertou(numero);
+
+    }
+
+    private void verificaAcertou(int numero) {
+        //todo: verificar se o utilizador acertou no número
     }
 
     @Override
