@@ -12,8 +12,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    private GeradorNumerosAdivinhar geradorNumeros;
+    private int numeroAdivinhar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,18 @@ public class MainActivity extends AppCompatActivity {
                 adivinha();
             }
         });
+
+        geradorNumeros = new GeradorNumerosAdivinhar();
+        novoJogo();
+    }
+
+    private void novoJogo() {
+        numeroAdivinhar = geradorNumeros.getProximoNumeroAdivinhar();
+        acertou("Jogo iniciado", Toast.LENGTH_LONG);
+    }
+
+    private void acertou(String s, int lengthLong) {
+        Toast.makeText(this, s, lengthLong).show();
     }
 
     private void adivinha() {
@@ -60,7 +76,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void verificaAcertou(int numero) {
-        //todo: verificar se o utilizador acertou no número
+        if (numero == numeroAdivinhar) {
+            Toast.makeText(this, "Parabéns acertou!", Toast.LENGTH_SHORT).show();
+        } else if (numero < numeroAdivinhar) {
+            Toast.makeText(this, "O número que estou a pensar é maior. Tente novamente", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(this, "O número que estou a pensar é menor. Tente novamente", Toast.LENGTH_LONG).show();
+    }
     }
 
     @Override
