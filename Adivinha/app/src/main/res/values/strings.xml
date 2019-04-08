@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="Adivinhe_numero">Adivinhe o número que estou a pensar (1 e 10)</string>
     <string name="numero">Número</string>
+    <string name="estatisticas">Estatísticas</string>
+    <string name="novo">Novo</string>
 </resources>

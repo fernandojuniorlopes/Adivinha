@@ -1,10 +1,12 @@
 package com.example.adivinha;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private GeradorNumerosAdivinhar geradorNumeros;
     private int numeroAdivinhar;
+    private int tentativas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void novoJogo() {
         numeroAdivinhar = geradorNumeros.getProximoNumeroAdivinhar();
-        acertou("Jogo iniciado", Toast.LENGTH_LONG);
-    }
-
-    private void acertou(String s, int lengthLong) {
-        Toast.makeText(this, s, lengthLong).show();
+        Toast.makeText(this, "Jogo iniciado", Toast.LENGTH_LONG).show();
+        tentativas = 0;
     }
 
     private void adivinha() {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             editTextNumero.requestFocus();
             return;
         }
-        int numero = Integer.parseInt(textoNumero);
+        int numero;
         try {
             numero = Integer.parseInt(textoNumero);
         } catch (NumberFormatException e) {
@@ -76,13 +76,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void verificaAcertou(int numero) {
+        tentativas++;
         if (numero == numeroAdivinhar) {
-            Toast.makeText(this, "Parabéns acertou!", Toast.LENGTH_SHORT).show();
+            acertou();
         } else if (numero < numeroAdivinhar) {
             Toast.makeText(this, "O número que estou a pensar é maior. Tente novamente", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(this, "O número que estou a pensar é menor. Tente novamente", Toast.LENGTH_LONG).show();
     }
+    }
+
+    private void acertou(){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle("Parabéns acertou");
+        dialogBuilder.setMessage( "Acertou ao fim de " + tentativas +". Pretende jogar de novo?");
+
+        dialogBuilder.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                novoJogo();
+            }
+        });
+
+        dialogBuilder.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        dialogBuilder.show();
     }
 
     @Override
@@ -101,9 +124,22 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(this, "Adivinha - versão 0.1", Toast.LENGTH_LONG).show();
+            return true;
+        }else if(id == R.id.action_novo){
+            actionNovo();
+            return true;
+        }else if(id == R.id.action_estatisticas){
+            actionEstatisticas();
             return true;
         }
 
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void actionEstatisticas() {
+    }
+    private void actionNovo() {
     }
 }
