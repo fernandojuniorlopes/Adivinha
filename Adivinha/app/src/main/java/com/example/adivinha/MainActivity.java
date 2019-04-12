@@ -1,6 +1,7 @@
 package com.example.adivinha;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -48,7 +49,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         geradorNumeros = new GeradorNumerosAdivinhar();
-        novoJogo();
+        if(savedInstanceState==null){
+            novoJogo();
+        }else{
+            //todo: repor o estado da atividade
+        }
+    }
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //todo: guardar estado da atividade
+        super.onSaveInstanceState(outState);
     }
 
     private void novoJogo() {
@@ -177,7 +188,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void actionEstatisticas() {
+        Intent intent = new Intent(this, EstatisticasActivity.class);
+
+        intent.putExtra(App.MIN_TENTATIVAS, minTentativasGanhar);
+        intent.putExtra(App.MAX_TENTATIVAS, maxTentativasGanhar);
+        intent.putExtra(App.TOTAL_TENTATIVAS, totalTentativasTodosJogos);
+
+        intent.putExtra(App.JOGOS, jogos);
+        intent.putExtra(App.VITORIAS, vitorias);
+        intent.putExtra(App.DERROTAS, derrotas);
+
+
+        startActivity(intent);
+
     }
+
     private void actionNovo() {
     }
+
 }
