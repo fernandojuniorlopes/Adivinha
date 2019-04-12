@@ -5,4 +5,9 @@
     <string name="numero">Número</string>
     <string name="estatisticas">Estatísticas</string>
     <string name="novo">Novo</string>
+    <string name="acertou">Parabéns acertou</string>
+    <string name="perdeu">Perdeu o jogo</string>
+    <string name="acertouaofim">Acertou ao fim de </string>
+    <string name="tentarnovo">Pretende jogar de novo?</string>
+    <string name="tentativas">tentativas</string>
 </resources>

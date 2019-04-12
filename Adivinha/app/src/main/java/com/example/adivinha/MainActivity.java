@@ -18,9 +18,20 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static int TENTATIVAS_APOS_QUAIS_PERDE = 5;
+
     private GeradorNumerosAdivinhar geradorNumeros;
     private int numeroAdivinhar;
     private int tentativas;
+
+
+    private int minTentativasGanhar = TENTATIVAS_APOS_QUAIS_PERDE;
+    private int maxTentativasGanhar = 0;
+
+    private int totalTentativasTodosJogos = 0;
+    private int jogos = 0;
+    private int vitorias = 0;
+    private int derrotas = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
         tentativas++;
         if (numero == numeroAdivinhar) {
             acertou();
+            return;
+        }
+        if(tentativas >= TENTATIVAS_APOS_QUAIS_PERDE){
+            perdeu();
+            return;
         } else if (numero < numeroAdivinhar) {
             Toast.makeText(this, "O número que estou a pensar é maior. Tente novamente", Toast.LENGTH_LONG).show();
         }else{
@@ -86,10 +102,33 @@ public class MainActivity extends AppCompatActivity {
     }
     }
 
+    private void perdeu() {
+        totalTentativasTodosJogos += tentativas;
+        jogos++;
+        vitorias++;
+
+        String mensagem = getString (R.string.tentarnovo);
+        perguntaSeQuerJogarOutraVez(R.string.perdeu, mensagem);
+    }
+
     private void acertou(){
+        totalTentativasTodosJogos += tentativas;
+        jogos++;
+        vitorias++;
+        if(tentativas < minTentativasGanhar){
+            minTentativasGanhar = tentativas;
+        }
+        if(tentativas > maxTentativasGanhar){
+            maxTentativasGanhar = tentativas;
+        }
+        String mensagem = getString(R.string.acertouaofim)+" "+tentativas+" "+" "+ (getString(R.string.tentativas))+" "+(getString(R.string.tentarnovo));
+        perguntaSeQuerJogarOutraVez(R.string.acertou, mensagem);
+    }
+
+    private void perguntaSeQuerJogarOutraVez(int recursoString, String mensagem) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setTitle("Parabéns acertou");
-        dialogBuilder.setMessage( "Acertou ao fim de " + tentativas +". Pretende jogar de novo?");
+        dialogBuilder.setTitle(recursoString);
+        dialogBuilder.setMessage(mensagem);
 
         dialogBuilder.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
             @Override
