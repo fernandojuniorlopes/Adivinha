@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     private int minTentativasGanhar = TENTATIVAS_APOS_QUAIS_PERDE;
     private int maxTentativasGanhar = 0;
-
     private int totalTentativasTodosJogos = 0;
     private int jogos = 0;
     private int vitorias = 0;

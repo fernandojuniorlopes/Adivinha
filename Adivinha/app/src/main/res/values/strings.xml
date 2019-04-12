@@ -10,4 +10,13 @@
     <string name="acertouaofim">Acertou ao fim de </string>
     <string name="tentarnovo">Pretende jogar de novo?</string>
     <string name="tentativas">tentativas</string>
+    <string name="title_activity_estatisticas">EstatisticasActivity</string>
+    <string name="titulo_tentativas">Tentativas</string>
+    <string name="titulo_jogos">Jogos</string>
+    <string name="minimo">mínimo</string>
+    <string name="estatistica_numero">Número</string>
+    <string name="vitorias">Vitórias</string>
+    <string name="derrotas">Derrotas</string>
+    <string name="maximo">máximo</string>
+    <string name="media">Média</string>
 </resources>
